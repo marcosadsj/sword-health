@@ -1,10 +1,8 @@
 package main
 
 import (
-	"sword-health-assessment/entities"
-
-	"gorm.io/driver/sqlite"
-	"gorm.io/gorm"
+	controller "sword-health-assessment/controller"
+	sqlite "sword-health-assessment/database/sqlite"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,19 +11,15 @@ func main() {
 
 	httpServer := gin.Default()
 
-	db, err := gorm.Open(sqlite.Open("test.db"), &gorm.Config{})
-
-	if err != nil {
-		panic("failed to connect database")
+	database := &sqlite.SQLite{
+		Pathname: "/Users/marcosadsj/Documents/Github/sword-health-assessment/test.db",
 	}
 
-	db.AutoMigrate(&entities.Manager{}, &entities.Technitian{}, &entities.Tasks{})
+	database.Connect()
 
-	db.Create(&entities.Manager{Name: "Marcos"})
+	database.Migrate()
 
-	db.Create(&entities.Technitian{Name: "Júnior"})
-
-	db.Create(&entities.Tasks{Name: "Tarefa 1"})
+	controller.Init(httpServer, database.GetDB())
 
 	httpServer.Run(":8080")
 

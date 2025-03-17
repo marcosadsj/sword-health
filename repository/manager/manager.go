@@ -6,10 +6,6 @@ import (
 	"gorm.io/gorm"
 )
 
-type IRepository struct {
-	db *gorm.DB
-}
-
 type IManagerRepository interface {
 	Create(entities.Manager) error
 	Read(entities.Manager) (entities.Manager, error)
@@ -18,12 +14,12 @@ type IManagerRepository interface {
 }
 
 type ManagerRepository struct {
-	db *gorm.DB
+	DB *gorm.DB
 }
 
 func (mr ManagerRepository) Create(manager entities.Manager) error {
 
-	tx := mr.db.Create(manager)
+	tx := mr.DB.Create(manager)
 
 	return tx.Error
 
@@ -31,7 +27,7 @@ func (mr ManagerRepository) Create(manager entities.Manager) error {
 
 func (mr ManagerRepository) Read(manager entities.Manager) (managers entities.Manager, err error) {
 
-	tx := mr.db.Where(manager).Find(&managers)
+	tx := mr.DB.Where(manager).Find(&managers)
 
 	return managers, tx.Error
 
@@ -39,7 +35,7 @@ func (mr ManagerRepository) Read(manager entities.Manager) (managers entities.Ma
 
 func (mr ManagerRepository) Update(manager entities.Manager) error {
 
-	tx := mr.db.Save(manager)
+	tx := mr.DB.Save(manager)
 
 	return tx.Error
 
@@ -47,7 +43,7 @@ func (mr ManagerRepository) Update(manager entities.Manager) error {
 
 func (mr ManagerRepository) Delete(ids []int) error {
 
-	tx := mr.db.Delete(&entities.Manager{}, ids)
+	tx := mr.DB.Delete(&entities.Manager{}, ids)
 
 	return tx.Error
 

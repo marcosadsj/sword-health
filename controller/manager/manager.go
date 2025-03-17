@@ -1,6 +1,8 @@
 package manager
 
 import (
+	"net/http"
+	"sword-health-assessment/entities"
 	managerService "sword-health-assessment/services/manager"
 
 	"github.com/gin-gonic/gin"
@@ -11,7 +13,7 @@ type IController interface {
 }
 
 type ManagerController struct {
-	Service *managerService.ManagerService
+	service *managerService.ManagerService
 }
 
 func (mc ManagerController) Controller(httpServer *gin.Engine) {
@@ -27,7 +29,11 @@ func (mc ManagerController) Controller(httpServer *gin.Engine) {
 
 func Create(ctx *gin.Context) {
 
-	managerService.Create()
+	manager := &entities.Manager{}
+
+	if errA := ctx.ShouldBindBodyWithJSON(&manager); errA != nil {
+		ctx.String(http.StatusInternalServerError, "Manager not created")
+	}
 
 }
 
