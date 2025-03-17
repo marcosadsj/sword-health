@@ -13,19 +13,19 @@ func (s *ManagerService) New(repository manager.IManagerRepository) {
 	s.repository = repository
 }
 
-func (s ManagerService) Create(manager entities.Manager) error {
+func (s ManagerService) Create(manager *entities.Manager) error {
 
 	return s.repository.Create(manager)
 
 }
 
-func (s ManagerService) Read(manager entities.Manager) (managers entities.Manager, err error) {
+func (s ManagerService) Read(manager *entities.Manager) (managers *entities.Manager, err error) {
 
 	return s.repository.Read(manager)
 
 }
 
-func (s ManagerService) Update(manager entities.Manager) error {
+func (s ManagerService) Update(manager *entities.Manager) error {
 
 	return s.repository.Update(manager)
 

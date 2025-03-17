@@ -36,10 +36,4 @@ func (d *SQLite) GetDB() *gorm.DB {
 
 func (d *SQLite) Migrate() {
 	d.db.AutoMigrate(&entities.Manager{}, &entities.Technitian{}, &entities.Tasks{})
-
-	d.db.Create(&entities.Manager{Name: "Marcos"})
-
-	d.db.Create(&entities.Technitian{Name: "Júnior"})
-
-	d.db.Create(&entities.Tasks{Name: "Tarefa 1"})
 }

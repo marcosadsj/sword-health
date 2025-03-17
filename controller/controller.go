@@ -21,5 +21,5 @@ func Init(httpServer *gin.Engine, db *gorm.DB) {
 
 	mc := &managerController.ManagerController{}
 
-	mc.Controller(httpServer)
+	mc.Controller(httpServer, mService)
 }

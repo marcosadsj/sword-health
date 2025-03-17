@@ -16,35 +16,44 @@ type ManagerController struct {
 	service *managerService.ManagerService
 }
 
-func (mc ManagerController) Controller(httpServer *gin.Engine) {
+func (mc ManagerController) Controller(httpServer *gin.Engine, service *managerService.ManagerService) {
+
+	mc.service = service
 
 	routeGroup := httpServer.Group("/manager")
 
-	routeGroup.POST("/create", Create)
-	routeGroup.GET("/findById/:id", Read)
-	routeGroup.PUT("/update/:id", Update)
-	routeGroup.DELETE("/delete/:id", Delete)
+	routeGroup.POST("/create", mc.Create)
+	routeGroup.GET("/findById/:id", mc.Read)
+	routeGroup.PUT("/update/:id", mc.Update)
+	routeGroup.DELETE("/delete/:id", mc.Delete)
 
 }
 
-func Create(ctx *gin.Context) {
+func (mc ManagerController) Create(ctx *gin.Context) {
 
-	manager := &entities.Manager{}
+	manager := entities.Manager{}
 
-	if errA := ctx.ShouldBindBodyWithJSON(&manager); errA != nil {
-		ctx.String(http.StatusInternalServerError, "Manager not created")
+	if err := ctx.ShouldBindBodyWithJSON(&manager); err == nil {
+
+		mc.service.Create(&manager)
+
+		ctx.String(http.StatusOK, "Manager created")
+
+		return
 	}
 
-}
-
-func Read(ctx *gin.Context) {
+	ctx.String(http.StatusInternalServerError, "Manager not created")
 
 }
 
-func Update(ctx *gin.Context) {
+func (mc ManagerController) Read(ctx *gin.Context) {
 
 }
 
-func Delete(ctx *gin.Context) {
+func (mc ManagerController) Update(ctx *gin.Context) {
+
+}
+
+func (mc ManagerController) Delete(ctx *gin.Context) {
 
 }
