@@ -25,6 +25,12 @@ func (s TaskService) Read(ids []int) (tasks []*entities.Task, err error) {
 
 }
 
+func (s TaskService) FindByTechnicianId(id int) (tasks []*entities.Task, err error) {
+
+	return s.repository.FindByTechnicianId(id)
+
+}
+
 func (s TaskService) Update(task *entities.Task) error {
 
 	return s.repository.Update(task)
