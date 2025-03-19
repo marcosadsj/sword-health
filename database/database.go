@@ -1,6 +1,12 @@
 package database
 
-import "sword-health-assessment/database/sqlite"
+import (
+	"log"
+	"os"
+	"time"
+
+	"gorm.io/gorm/logger"
+)
 
 type IDatabase interface {
 	Connect()
@@ -8,6 +14,15 @@ type IDatabase interface {
 	Repository()
 }
 
-type Database struct {
-	sqlite sqlite.SQLite
+func GetLogger() logger.Interface {
+	return logger.New(
+		log.New(os.Stdout, "\r\n", log.LstdFlags), // io writer
+		logger.Config{
+			SlowThreshold:             time.Second, // Slow SQL threshold
+			LogLevel:                  logger.Info, // Log level
+			IgnoreRecordNotFoundError: true,        // Ignore ErrRecordNotFound error for logger
+			ParameterizedQueries:      true,        // Don't include params in the SQL log
+			Colorful:                  false,       // Disable color
+		},
+	)
 }

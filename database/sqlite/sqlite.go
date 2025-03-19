@@ -1,9 +1,10 @@
 package sqlite
 
 import (
+	"sword-health-assessment/database"
 	"sword-health-assessment/entities"
 
-	"gorm.io/driver/sqlite"
+	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
 )
 
@@ -13,7 +14,7 @@ type SQLite struct {
 }
 
 func (d *SQLite) Connect() {
-	db, err := gorm.Open(sqlite.Open(d.Pathname), &gorm.Config{})
+	db, err := gorm.Open(sqlite.Open(d.Pathname), &gorm.Config{Logger: database.GetLogger()})
 
 	if err != nil {
 		panic("failed to connect database")
@@ -35,5 +36,5 @@ func (d *SQLite) GetDB() *gorm.DB {
 }
 
 func (d *SQLite) Migrate() {
-	d.db.AutoMigrate(&entities.Manager{}, &entities.Technitian{}, &entities.Tasks{})
+	d.db.AutoMigrate(&entities.Manager{}, &entities.Technician{}, &entities.Task{})
 }
