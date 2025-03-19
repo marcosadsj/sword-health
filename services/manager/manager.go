@@ -19,9 +19,9 @@ func (s ManagerService) Create(manager *entities.Manager) error {
 
 }
 
-func (s ManagerService) Read(manager *entities.Manager) (managers *entities.Manager, err error) {
+func (s ManagerService) Read(ids []int) (managers []*entities.Manager, err error) {
 
-	return s.repository.Read(manager)
+	return s.repository.Read(ids)
 
 }
 
