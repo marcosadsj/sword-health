@@ -1,4 +1,4 @@
-package tasks
+package task
 
 import (
 	"sword-health-assessment/entities"
@@ -19,9 +19,9 @@ func (s TaskService) Create(task *entities.Task) error {
 
 }
 
-func (s TaskService) Read(task *entities.Task) (tasks *entities.Task, err error) {
+func (s TaskService) Read(ids []int) (tasks []*entities.Task, err error) {
 
-	return s.repository.Read(task)
+	return s.repository.Read(ids)
 
 }
 

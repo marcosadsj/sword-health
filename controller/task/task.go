@@ -26,7 +26,7 @@ func (mc TaskController) Controller(httpServer *gin.Engine, service *taskService
 
 	routeGroup.POST("/create", mc.create)
 	routeGroup.GET("/findById/:id", mc.read)
-	routeGroup.PUT("/update/:id", mc.update)
+	routeGroup.PUT("/update", mc.update)
 	routeGroup.DELETE("/delete/:id", mc.delete)
 
 }
@@ -50,26 +50,33 @@ func (mc TaskController) create(ctx *gin.Context) {
 
 func (mc TaskController) read(ctx *gin.Context) {
 
-	task := &entities.Task{}
-
 	idString := ctx.Param("id")
 
-	if idString != "" {
+	if idString == "" {
 
-		id, err := strconv.ParseInt(idString, 10, 32)
+		ctx.String(http.StatusBadRequest, "Empty request param")
 
-		if err != nil {
-
-			ctx.String(http.StatusBadRequest, fmt.Sprintf("Wrong request param: %v", id))
-
-			return
-		}
-
-		task.ID = uint(id)
-
+		return
 	}
 
-	mc.service.Read(task)
+	id, err := strconv.ParseInt(idString, 10, 32)
+
+	if err != nil {
+
+		ctx.String(http.StatusBadRequest, fmt.Sprintf("Wrong request param: %v", id))
+
+		return
+	}
+
+	tasks, err := mc.service.Read([]int{int(id)})
+
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error to find task(s): %v", err))
+
+		return
+	}
+
+	ctx.JSON(http.StatusOK, tasks)
 }
 
 func (mc TaskController) update(ctx *gin.Context) {

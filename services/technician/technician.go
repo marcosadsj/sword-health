@@ -19,9 +19,9 @@ func (s TechnicianService) Create(technician *entities.Technician) error {
 
 }
 
-func (s TechnicianService) Read(technician *entities.Technician) (technicians *entities.Technician, err error) {
+func (s TechnicianService) Read(ids []int) (technicians []*entities.Technician, err error) {
 
-	return s.repository.Read(technician)
+	return s.repository.Read(ids)
 
 }
 
