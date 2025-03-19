@@ -8,7 +8,7 @@ import (
 
 type IManagerRepository interface {
 	Create(*entities.Manager) error
-	Read(*entities.Manager) (*entities.Manager, error)
+	Read(ids []int) ([]*entities.Manager, error)
 	Update(*entities.Manager) error
 	Delete(ids []int) error
 }
@@ -25,9 +25,9 @@ func (mr ManagerRepository) Create(manager *entities.Manager) error {
 
 }
 
-func (mr ManagerRepository) Read(manager *entities.Manager) (managers *entities.Manager, err error) {
+func (mr ManagerRepository) Read(ids []int) (managers []*entities.Manager, err error) {
 
-	tx := mr.DB.Where(manager).Find(&managers)
+	tx := mr.DB.Raw("SELECT * FROM `managers` WHERE `managers`.`id` IN ? AND `managers`.`deleted_at` IS NULL", ids).Scan(&managers)
 
 	return managers, tx.Error
 
@@ -35,7 +35,7 @@ func (mr ManagerRepository) Read(manager *entities.Manager) (managers *entities.
 
 func (mr ManagerRepository) Update(manager *entities.Manager) error {
 
-	tx := mr.DB.Save(manager)
+	tx := mr.DB.Updates(manager)
 
 	return tx.Error
 
