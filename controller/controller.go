@@ -3,7 +3,7 @@ package api
 import (
 	managerController "sword-health-assessment/controller/manager"
 	taskController "sword-health-assessment/controller/task"
-	technicianController "sword-health-assessment/controller/technician"
+	techController "sword-health-assessment/controller/technician"
 
 	managerRepository "sword-health-assessment/repository/manager"
 	managerService "sword-health-assessment/services/manager"
@@ -40,12 +40,12 @@ func Init(httpServer *gin.Engine, db *gorm.DB) {
 
 	mc := &managerController.ManagerController{}
 
-	techC := &technicianController.TechnicianController{}
+	techC := &techController.TechnicianController{}
 
 	taskC := &taskController.TaskController{}
 
 	mc.Controller(httpServer, managerService)
-	techC.Controller(httpServer, techService)
+	techC.Controller(httpServer, techService, tService)
 	taskC.Controller(httpServer, tService)
 
 }
