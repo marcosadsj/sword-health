@@ -10,10 +10,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type IController interface {
-	Controller(*gin.Engine)
-}
-
 type TaskController struct {
 	service *taskService.TaskService
 }
@@ -25,7 +21,7 @@ func (mc TaskController) Controller(httpServer *gin.Engine, service *taskService
 	routeGroup := httpServer.Group("/task")
 
 	routeGroup.POST("/create", mc.create)
-	routeGroup.GET("/findById/:id", mc.read)
+	routeGroup.GET("/findByTechnicianId/:id", mc.findByTechnicianId)
 	routeGroup.PUT("/update", mc.update)
 	routeGroup.DELETE("/delete/:id", mc.delete)
 
@@ -48,7 +44,7 @@ func (mc TaskController) create(ctx *gin.Context) {
 
 }
 
-func (mc TaskController) read(ctx *gin.Context) {
+func (mc TaskController) findByTechnicianId(ctx *gin.Context) {
 
 	idString := ctx.Param("id")
 
@@ -68,7 +64,7 @@ func (mc TaskController) read(ctx *gin.Context) {
 		return
 	}
 
-	tasks, err := mc.service.Read([]int{int(id)})
+	tasks, err := mc.service.FindByTechnicianId(int(id))
 
 	if err != nil {
 		ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error to find task(s): %v", err))

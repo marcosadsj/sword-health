@@ -10,10 +10,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type IController interface {
-	Controller(*gin.Engine)
-}
-
 type ManagerController struct {
 	service *managerService.ManagerService
 }
