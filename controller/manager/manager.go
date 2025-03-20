@@ -76,6 +76,7 @@ func (mc ManagerController) read(ctx *gin.Context) {
 	managers, err := mc.service.Read([]int{int(id)})
 
 	if err != nil {
+
 		ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error to find manager(s): %v", err))
 
 		return
@@ -118,6 +119,7 @@ func (mc ManagerController) listByTechnicianId(ctx *gin.Context) {
 	tasks, err := mc.taskService.FindByTechnicianId(int(technicianId))
 
 	if err != nil {
+
 		ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error to find tasks(s) of technician %d: %v", technicianId, err))
 
 		return
@@ -160,6 +162,7 @@ func (mc ManagerController) deleteByTaskId(ctx *gin.Context) {
 	err = mc.taskService.Delete([]int{int(taskId)})
 
 	if err != nil {
+
 		ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error deleting task %d: %v", taskId, err))
 
 		return
@@ -203,7 +206,9 @@ func (mc ManagerController) delete(ctx *gin.Context) {
 		err = mc.service.Delete([]int{int(id)})
 
 		if err != nil {
+
 			ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error on delete Manager: %v", err))
+
 			return
 		}
 
