@@ -1,6 +1,7 @@
 package manager
 
 import (
+	"errors"
 	"sword-health-assessment/entities"
 
 	"gorm.io/gorm"
@@ -18,6 +19,10 @@ type ManagerRepository struct {
 }
 
 func (mr ManagerRepository) Create(manager *entities.Manager) error {
+
+	if manager.Name == "" {
+		return errors.New("name cannot be empty")
+	}
 
 	tx := mr.DB.Create(&manager)
 
