@@ -6,17 +6,23 @@ import (
 	"strconv"
 	"sword-health-assessment/entities"
 	managerService "sword-health-assessment/services/manager"
+	taskService "sword-health-assessment/services/task"
 
 	"github.com/gin-gonic/gin"
 )
 
 type ManagerController struct {
-	service *managerService.ManagerService
+	service     *managerService.ManagerService
+	taskService *taskService.TaskService
 }
 
-func (mc ManagerController) Controller(httpServer *gin.Engine, service *managerService.ManagerService) {
+func (mc ManagerController) Controller(
+	httpServer *gin.Engine,
+	service *managerService.ManagerService,
+	taskService *taskService.TaskService) {
 
 	mc.service = service
+	mc.taskService = taskService
 
 	routeGroup := httpServer.Group("/manager")
 
@@ -24,6 +30,9 @@ func (mc ManagerController) Controller(httpServer *gin.Engine, service *managerS
 	routeGroup.GET("/findById/:id", mc.read)
 	routeGroup.PUT("/update", mc.update)
 	routeGroup.DELETE("/delete/:id", mc.delete)
+
+	routeGroup.GET("/:id/task/listByTechnicianId/:technicianId", mc.listByTechnicianId)
+	routeGroup.DELETE("/:id/task/deleteByTaskId/:taskId", mc.deleteByTaskId)
 
 }
 
@@ -73,6 +82,90 @@ func (mc ManagerController) read(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, managers)
+}
+
+func (mc ManagerController) listByTechnicianId(ctx *gin.Context) {
+
+	idString := ctx.Param("id")
+
+	technicianIdString := ctx.Param("technicianId")
+
+	if idString == "" || technicianIdString == "" {
+
+		ctx.String(http.StatusBadRequest, fmt.Sprintf("Empty request param. id: %s technicianId: %s", idString, technicianIdString))
+
+		return
+	}
+
+	_, err := strconv.ParseInt(idString, 10, 32)
+
+	if err != nil {
+
+		ctx.String(http.StatusBadRequest, fmt.Sprintf("Wrong request param: %v", err))
+
+		return
+	}
+
+	technicianId, err := strconv.ParseInt(technicianIdString, 10, 32)
+
+	if err != nil {
+
+		ctx.String(http.StatusBadRequest, fmt.Sprintf("Wrong request param: %v", err))
+
+		return
+	}
+
+	tasks, err := mc.taskService.FindByTechnicianId(int(technicianId))
+
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error to find tasks(s) of technician %d: %v", technicianId, err))
+
+		return
+	}
+
+	ctx.JSON(http.StatusOK, tasks)
+}
+
+func (mc ManagerController) deleteByTaskId(ctx *gin.Context) {
+
+	idString := ctx.Param("id")
+
+	taskIdString := ctx.Param("taskId")
+
+	if idString == "" || taskIdString == "" {
+
+		ctx.String(http.StatusBadRequest, fmt.Sprintf("Empty request param. id: %s taskId: %s", idString, taskIdString))
+
+		return
+	}
+
+	_, err := strconv.ParseInt(idString, 10, 32)
+
+	if err != nil {
+
+		ctx.String(http.StatusBadRequest, fmt.Sprintf("Wrong request param: %v", err))
+
+		return
+	}
+
+	taskId, err := strconv.ParseInt(taskIdString, 10, 32)
+
+	if err != nil {
+
+		ctx.String(http.StatusBadRequest, fmt.Sprintf("Wrong request param: %v", err))
+
+		return
+	}
+
+	err = mc.taskService.Delete([]int{int(taskId)})
+
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error deleting task %d: %v", taskId, err))
+
+		return
+	}
+
+	ctx.String(http.StatusOK, "Task deleted")
 }
 
 func (mc ManagerController) update(ctx *gin.Context) {
