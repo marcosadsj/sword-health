@@ -2,8 +2,8 @@ package api
 
 import (
 	managerController "sword-health-assessment/controller/manager"
-	taskController "sword-health-assessment/controller/task"
 	techController "sword-health-assessment/controller/technician"
+	"sword-health-assessment/notification"
 
 	managerRepository "sword-health-assessment/repository/manager"
 	managerService "sword-health-assessment/services/manager"
@@ -18,13 +18,13 @@ import (
 	"gorm.io/gorm"
 )
 
-func Init(httpServer *gin.Engine, db *gorm.DB) {
+func Init(httpServer *gin.Engine, db *gorm.DB, notificationChan chan<- notification.Notification) {
 
 	managerRepository := &managerRepository.ManagerRepository{DB: db}
 
 	techRepository := &technicianRepository.TechnicianRepository{DB: db}
 
-	tRepository := &taskRepository.TaskRepository{DB: db}
+	taskRepository := &taskRepository.TaskRepository{DB: db}
 
 	managerService := &managerService.ManagerService{}
 
@@ -34,18 +34,14 @@ func Init(httpServer *gin.Engine, db *gorm.DB) {
 
 	techService.New(techRepository)
 
-	tService := &taskService.TaskService{}
+	taskService := &taskService.TaskService{}
 
-	tService.New(tRepository)
+	taskService.New(taskRepository)
 
-	mc := &managerController.ManagerController{}
+	managerController := &managerController.ManagerController{}
 
-	techC := &techController.TechnicianController{}
+	techController := &techController.TechnicianController{}
 
-	taskC := &taskController.TaskController{}
-
-	mc.Controller(httpServer, managerService)
-	techC.Controller(httpServer, techService, tService)
-	taskC.Controller(httpServer, tService)
-
+	managerController.Controller(httpServer, managerService, taskService)
+	techController.Controller(httpServer, techService, taskService, notificationChan)
 }
