@@ -28,7 +28,7 @@ func (mr TaskRepository) Create(task *entities.Task) error {
 
 func (mr TaskRepository) Read(ids []int) (tasks []*entities.Task, err error) {
 
-	tx := mr.DB.Raw("SELECT * FROM `tasks` WHERE `tasks`.`id` IN ? AND `tasks`.`deleted_at` IS NULL", ids).Scan(&tasks)
+	tx := mr.DB.Find(&tasks, ids)
 
 	return tasks, tx.Error
 
@@ -36,7 +36,7 @@ func (mr TaskRepository) Read(ids []int) (tasks []*entities.Task, err error) {
 
 func (mr TaskRepository) FindByTechnicianId(id int) (tasks []*entities.Task, err error) {
 
-	tx := mr.DB.Raw("SELECT * FROM `tasks` WHERE `tasks`.`technician_id` = ? AND `tasks`.`deleted_at` IS NULL", id).Scan(&tasks)
+	tx := mr.DB.Find(&tasks, id)
 
 	return tasks, tx.Error
 

@@ -27,7 +27,7 @@ func (mr TechnicianRepository) Create(technician *entities.Technician) error {
 
 func (mr TechnicianRepository) Read(ids []int) (technicians []*entities.Technician, err error) {
 
-	tx := mr.DB.Raw("SELECT * FROM `technicians` WHERE `technicians`.`id` IN ? AND `technicians`.`deleted_at` IS NULL", ids).Scan(&technicians)
+	tx := mr.DB.Find(&technicians, ids)
 
 	return technicians, tx.Error
 
