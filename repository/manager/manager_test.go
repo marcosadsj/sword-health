@@ -2,6 +2,7 @@ package manager
 
 import (
 	"errors"
+	"os"
 	"sword-health-assessment/database/sqlite"
 	"sword-health-assessment/entities"
 	"testing"
@@ -9,7 +10,7 @@ import (
 
 func BeforeEach() *sqlite.SQLite {
 	database := &sqlite.SQLite{
-		Pathname: "/Users/marcosadsj/Documents/Github/sword-health-assessment/test_manager.db",
+		Pathname: "test_manager.db",
 	}
 
 	database.Connect()
@@ -17,6 +18,10 @@ func BeforeEach() *sqlite.SQLite {
 	database.Migrate()
 
 	return database
+}
+
+func AfterEach() {
+	os.Remove("test_manager.db")
 }
 
 func TestCreate(t *testing.T) {
@@ -57,4 +62,6 @@ func TestCreate(t *testing.T) {
 		}
 
 	}
+
+	AfterEach()
 }
