@@ -5,32 +5,33 @@ import (
 	"net/http"
 	"strconv"
 	"sword-health-assessment/entities"
+	"sword-health-assessment/notification"
 	taskService "sword-health-assessment/services/task"
 	technicianService "sword-health-assessment/services/technician"
 
 	"github.com/gin-gonic/gin"
 )
 
-type TechnicianController struct {
-	service     *technicianService.TechnicianService
-	taskService *taskService.TaskService
-}
-
 func (mc TechnicianController) Controller(
 	httpServer *gin.Engine,
 	service *technicianService.TechnicianService,
-	taskService *taskService.TaskService) {
+	taskService *taskService.TaskService,
+	notificationChan chan<- notification.Notification) {
 
 	mc.service = service
 	mc.taskService = taskService
+	mc.notificationChan = notificationChan
 
 	routeGroup := httpServer.Group("/technician")
 
 	routeGroup.POST("/create", mc.create)
 	routeGroup.GET("/findById/:id", mc.read)
-	routeGroup.GET("/:id/tasks", mc.tasks)
 	routeGroup.PUT("/update", mc.update)
 	routeGroup.DELETE("/delete/:id", mc.delete)
+
+	routeGroup.GET("/:id/task/list", mc.listTasks)
+	routeGroup.POST("/:id/task/create", mc.createTask)
+	routeGroup.PATCH("/:id/task/update", mc.updateTask)
 
 }
 
@@ -80,37 +81,6 @@ func (mc TechnicianController) read(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, technicians)
-}
-
-func (mc TechnicianController) tasks(ctx *gin.Context) {
-
-	idString := ctx.Param("id")
-
-	if idString == "" {
-
-		ctx.String(http.StatusBadRequest, "Empty request param")
-
-		return
-	}
-
-	id, err := strconv.ParseInt(idString, 10, 32)
-
-	if err != nil {
-
-		ctx.String(http.StatusBadRequest, fmt.Sprintf("Wrong request param: %v", id))
-
-		return
-	}
-
-	tasks, err := mc.taskService.FindByTechnicianId(int(id))
-
-	if err != nil {
-		ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error to find technician(s): %v", err))
-
-		return
-	}
-
-	ctx.JSON(http.StatusOK, tasks)
 }
 
 func (mc TechnicianController) update(ctx *gin.Context) {
