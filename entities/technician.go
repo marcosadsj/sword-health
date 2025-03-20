@@ -4,9 +4,8 @@ import "gorm.io/gorm"
 
 type Technician struct {
 	gorm.Model
-	Id    int64  `goorm:"column:id;primaryKey"`
 	Name  string `goorm:"column:name"`
-	Tasks []Task `gorm:"foreignkey:TechnicianID;references:Id"`
+	Tasks []Task `gorm:"foreignkey:TechnicianID;references:ID"`
 }
 
 func (Technician) TableName() string {
