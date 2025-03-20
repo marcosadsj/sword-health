@@ -4,10 +4,9 @@ import "gorm.io/gorm"
 
 type Task struct {
 	gorm.Model
-	Id           int64  `goorm:"column:id;primaryKey"`
 	Name         string `goorm:"column:name"`
-	Description  string `goorm:"column:description"`
-	TechnicianID uint
+	Description  string `goorm:"column:description;size:2500"`
+	TechnicianID uint   `gorm:"<-:create"`
 }
 
 func (Task) TableName() string {
