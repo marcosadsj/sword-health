@@ -1,6 +1,7 @@
 package technician
 
 import (
+	"errors"
 	"sword-health-assessment/entities"
 
 	"gorm.io/gorm"
@@ -19,6 +20,9 @@ type TechnicianRepository struct {
 
 func (mr TechnicianRepository) Create(technician *entities.Technician) error {
 
+	if technician.Name == "" {
+		return errors.New("name cannot be empty")
+	}
 	tx := mr.DB.Create(&technician)
 
 	return tx.Error
