@@ -11,3 +11,22 @@ type Technician struct {
 func (Technician) TableName() string {
 	return "technicians"
 }
+
+func (m Technician) Equals(technician Technician) bool {
+
+	if m.ID != technician.ID {
+		return false
+	}
+
+	if m.Name != technician.Name {
+		return false
+	}
+
+	for i, t := range m.Tasks {
+		if !t.Equals(technician.Tasks[i]) {
+			return false
+		}
+	}
+
+	return true
+}

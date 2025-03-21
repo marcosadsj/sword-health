@@ -12,3 +12,24 @@ type Task struct {
 func (Task) TableName() string {
 	return "tasks"
 }
+
+func (t Task) Equals(task Task) bool {
+
+	if t.ID != task.ID {
+		return false
+	}
+
+	if t.Name != task.Name {
+		return false
+	}
+
+	if t.Description != task.Description {
+		return false
+	}
+
+	if t.TechnicianID != task.TechnicianID {
+		return false
+	}
+
+	return true
+}
