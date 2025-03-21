@@ -95,8 +95,18 @@ func TestRead(t *testing.T) {
 			want: &entities.Technician{Model: gorm.Model{ID: 1}, Name: "Marcos 1"},
 		},
 		{
-			in:   &entities.Technician{Model: gorm.Model{ID: 2}, Name: "Marcos 2"},
-			want: &entities.Technician{Model: gorm.Model{ID: 2}, Name: "Marcos 2"},
+			in: &entities.Technician{
+				Model: gorm.Model{ID: 2},
+				Name:  "Marcos 2",
+				Tasks: []entities.Task{
+					{Model: gorm.Model{ID: uint(1)}, Name: "Task 1", Description: "Descrição 1", TechnicianID: 1},
+				}},
+			want: &entities.Technician{
+				Model: gorm.Model{ID: 2},
+				Name:  "Marcos 2",
+				Tasks: []entities.Task{
+					{Model: gorm.Model{ID: uint(1)}, Name: "Task 1", Description: "Descrição 1", TechnicianID: 1},
+				}},
 		},
 	}
 
@@ -139,8 +149,18 @@ func TestUpdate(t *testing.T) {
 			want: &entities.Technician{Model: gorm.Model{ID: 1}, Name: "Marcos 11"},
 		},
 		{
-			in:   &entities.Technician{Model: gorm.Model{ID: 2}, Name: "Marcos 2"},
-			want: &entities.Technician{Model: gorm.Model{ID: 2}, Name: "Marcos 22"},
+			in: &entities.Technician{
+				Model: gorm.Model{ID: 2},
+				Name:  "Marcos 2",
+				Tasks: []entities.Task{
+					{Model: gorm.Model{ID: uint(1)}, Name: "Task 1", Description: "Descrição 1", TechnicianID: 1},
+				}},
+			want: &entities.Technician{
+				Model: gorm.Model{ID: 2},
+				Name:  "Marcos 22",
+				Tasks: []entities.Task{
+					{Model: gorm.Model{ID: uint(1)}, Name: "Task 1", Description: "Descrição 1", TechnicianID: 1},
+				}},
 		},
 	}
 
@@ -188,7 +208,12 @@ func TestDelete(t *testing.T) {
 			want: nil,
 		},
 		{
-			in:   &entities.Technician{Model: gorm.Model{ID: 2}, Name: "Marcos 2"},
+			in: &entities.Technician{
+				Model: gorm.Model{ID: 2},
+				Name:  "Marcos 2",
+				Tasks: []entities.Task{
+					{Model: gorm.Model{ID: uint(1)}, Name: "Task 1", Description: "Descrição 1", TechnicianID: 1},
+				}},
 			want: nil,
 		},
 	}
