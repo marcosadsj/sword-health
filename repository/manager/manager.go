@@ -40,7 +40,7 @@ func (mr ManagerRepository) Read(ids []int) (managers []*entities.Manager, err e
 
 func (mr ManagerRepository) Update(manager *entities.Manager) error {
 
-	tx := mr.DB.Updates(manager)
+	tx := mr.DB.UpdateColumns(manager)
 
 	return tx.Error
 
