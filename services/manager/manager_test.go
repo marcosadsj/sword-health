@@ -5,6 +5,8 @@ import (
 	"os"
 	"sword-health-assessment/database/sqlite"
 	"sword-health-assessment/entities"
+	managerRepository "sword-health-assessment/repository/manager"
+
 	"testing"
 
 	"gorm.io/gorm"
@@ -30,7 +32,9 @@ func TestCreate(t *testing.T) {
 
 	database := BeforeEach()
 
-	managerRepository := ManagerRepository{DB: database.GetDB()}
+	managerRepository := managerRepository.ManagerRepository{DB: database.GetDB()}
+
+	managerService := ManagerService{repository: managerRepository}
 
 	cases := []struct {
 		in   entities.Manager
@@ -48,7 +52,7 @@ func TestCreate(t *testing.T) {
 
 	for _, c := range cases {
 
-		got := managerRepository.Create(&c.in)
+		got := managerService.Create(&c.in)
 
 		if got != nil && c.want != nil {
 
@@ -72,7 +76,9 @@ func TestRead(t *testing.T) {
 
 	database := BeforeEach()
 
-	managerRepository := ManagerRepository{DB: database.GetDB()}
+	managerRepository := managerRepository.ManagerRepository{DB: database.GetDB()}
+
+	managerService := ManagerService{repository: managerRepository}
 
 	cases := []struct {
 		in   *entities.Manager
@@ -90,9 +96,9 @@ func TestRead(t *testing.T) {
 
 	for i, c := range cases {
 
-		_ = managerRepository.Create(c.in)
+		_ = managerService.Create(c.in)
 
-		got, err := managerRepository.Read([]int{i + 1})
+		got, err := managerService.Read([]int{i + 1})
 
 		if err != nil {
 			t.Errorf("Error reading manager %v", err)
@@ -114,7 +120,9 @@ func TestUpdate(t *testing.T) {
 
 	database := BeforeEach()
 
-	managerRepository := ManagerRepository{DB: database.GetDB()}
+	managerRepository := managerRepository.ManagerRepository{DB: database.GetDB()}
+
+	managerService := ManagerService{repository: managerRepository}
 
 	cases := []struct {
 		in   *entities.Manager
@@ -132,15 +140,15 @@ func TestUpdate(t *testing.T) {
 
 	for i, c := range cases {
 
-		_ = managerRepository.Create(c.in)
+		_ = managerService.Create(c.in)
 
-		err := managerRepository.Update(c.want)
+		err := managerService.Update(c.want)
 
 		if err != nil {
 			t.Errorf("Error updating manager %v", err)
 		}
 
-		got, err := managerRepository.Read([]int{i + 1})
+		got, err := managerService.Read([]int{i + 1})
 
 		if err != nil {
 			t.Errorf("Error reading manager %v", err)
@@ -161,7 +169,9 @@ func TestDelete(t *testing.T) {
 
 	database := BeforeEach()
 
-	managerRepository := ManagerRepository{DB: database.GetDB()}
+	managerRepository := managerRepository.ManagerRepository{DB: database.GetDB()}
+
+	managerService := ManagerService{repository: managerRepository}
 
 	cases := []struct {
 		in   *entities.Manager
@@ -179,9 +189,9 @@ func TestDelete(t *testing.T) {
 
 	for _, c := range cases {
 
-		_ = managerRepository.Create(c.in)
+		_ = managerService.Create(c.in)
 
-		got := managerRepository.Delete([]int{int(c.in.ID)})
+		got := managerService.Delete([]int{int(c.in.ID)})
 
 		if c.want != got {
 			t.Errorf("Expected: %v want: %v", c.want, got)
