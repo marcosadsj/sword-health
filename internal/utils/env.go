@@ -31,17 +31,23 @@ func LoadEnv() ENVS {
 	SW_ENVIRONMENT := os.Getenv("SW_ENVIRONMENT")
 
 	var ENV_FILENAME string
+	var err error
 
 	switch SW_ENVIRONMENT {
 	case PRODUCTION:
 		ENV_FILENAME = "prod"
+
 	case DEVELOPMENT:
 		ENV_FILENAME = "dev"
+
 	default:
 		ENV_FILENAME = "local"
-	}
 
-	err := godotenv.Load(fmt.Sprintf("../resources/%s.env", ENV_FILENAME))
+		err = godotenv.Load(fmt.Sprintf("../resources/%s.env", ENV_FILENAME))
+
+		log.Println("Local enviroment loaded")
+
+	}
 
 	if err != nil {
 		log.Fatal("Error loading .env file")

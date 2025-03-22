@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    depends_on: 
+      - mysql
     environment:
       SW_ENVIRONMENT: PRODUCTION
       GIN_PORT: 8080
