@@ -1,9 +1,9 @@
 package main
 
 import (
-	"os"
 	controller "sword-health-assessment/internal/controller"
 	databases "sword-health-assessment/internal/database"
+	"sword-health-assessment/internal/utils"
 
 	"sword-health-assessment/internal/notification"
 
@@ -12,18 +12,13 @@ import (
 
 func main() {
 
-	SW_ENVIRONMENT := os.Getenv("SW_ENVIRONMENT")
-	DATABASE_TYPE := os.Getenv("DATABASE_TYPE")
-	GIN_PORT := os.Getenv("GIN_PORT")
-
-	if GIN_PORT == "" {
-		GIN_PORT = "8080"
-	}
-
 	httpServer := gin.Default()
 
-	database := databases.Create(DATABASE_TYPE)
-	database.New(SW_ENVIRONMENT)
+	envs := utils.LoadEnv()
+
+	database := databases.Create(envs.DATABASE_TYPE)
+
+	database.New(envs.SW_ENVIRONMENT)
 	database.Connect()
 
 	//buffer size can be ajusted based on demand, to avoid blocking
@@ -33,6 +28,6 @@ func main() {
 
 	controller.Init(httpServer, database.GetDB(), notificationChan)
 
-	httpServer.Run(":" + GIN_PORT)
+	httpServer.Run(":" + envs.GIN_PORT)
 
 }
