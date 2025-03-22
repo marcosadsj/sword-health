@@ -1,7 +1,8 @@
 package sqlite
 
 import (
-	"sword-health-assessment/internal/database"
+	"path/filepath"
+	"sword-health-assessment/internal/database/logger"
 	"sword-health-assessment/internal/entities"
 
 	"github.com/glebarez/sqlite"
@@ -10,17 +11,48 @@ import (
 
 type SQLite struct {
 	db       *gorm.DB
-	Pathname string
+	filepath string
+}
+
+func (d *SQLite) New(enviroment string) {
+
+	d.SetEnviroment(enviroment)
+}
+
+func (d *SQLite) SetEnviroment(enviroment string) {
+	if enviroment == "PRODUCTION" {
+		path, err := filepath.Abs("./resources/database.db")
+
+		if err != nil {
+			panic("Error to create absolute path")
+		}
+
+		d.filepath = path
+
+		return
+	}
+
+	path, err := filepath.Abs("../resources/database.db")
+
+	if err != nil {
+		panic("Error to create absolute path")
+	}
+
+	d.filepath = path
+
 }
 
 func (d *SQLite) Connect() {
-	db, err := gorm.Open(sqlite.Open(d.Pathname), &gorm.Config{Logger: database.GetLogger()})
+	db, err := gorm.Open(sqlite.Open(d.filepath), &gorm.Config{Logger: logger.GetLogger()})
 
 	if err != nil {
 		panic("failed to connect database")
 	}
 
 	d.db = db
+
+	d.Migrate()
+
 }
 
 func (d SQLite) Close() {
