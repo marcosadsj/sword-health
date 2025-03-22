@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 	"sword-health-assessment/internal/database/logger"
 	"sword-health-assessment/internal/entities"
+	"sword-health-assessment/internal/utils"
 
 	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"
@@ -21,19 +22,21 @@ func (d *SQLite) New(enviroment string) {
 }
 
 func (d *SQLite) SetEnviroment(enviroment string) {
-	if enviroment == "PRODUCTION" {
-		path, err := filepath.Abs("./resources/database.db")
 
-		if err != nil {
-			panic("Error to create absolute path")
-		}
+	var relativePath string
+	var err error
 
-		d.filepath = path
+	switch enviroment {
+	case utils.PRODUCTION:
+		relativePath = "./resources/database.db"
+	case utils.DEVELOPMENT:
+		relativePath = "../resources/database.db"
+	case utils.TESTING:
+		relativePath = "./testing.db"
 
-		return
 	}
 
-	path, err := filepath.Abs("../resources/database.db")
+	path, err := filepath.Abs(relativePath)
 
 	if err != nil {
 		panic("Error to create absolute path")

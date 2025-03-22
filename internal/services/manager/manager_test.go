@@ -5,6 +5,7 @@ import (
 	"os"
 	databases "sword-health-assessment/internal/database"
 	databaseFactory "sword-health-assessment/internal/database/factory"
+	"sword-health-assessment/internal/utils"
 
 	"sword-health-assessment/internal/entities"
 	managerRepository "sword-health-assessment/internal/repository/manager"
@@ -18,6 +19,8 @@ func BeforeEach() databases.IDatabase {
 
 	database := databaseFactory.Create("SQLITE")
 
+	database.New(utils.TESTING)
+
 	database.Connect()
 
 	database.Migrate()
@@ -26,7 +29,7 @@ func BeforeEach() databases.IDatabase {
 }
 
 func AfterEach() {
-	os.Remove("test_manager.db")
+	os.Remove("testing.db")
 }
 
 func TestCreate(t *testing.T) {

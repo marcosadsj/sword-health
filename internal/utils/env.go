@@ -16,6 +16,7 @@ type ENVS struct {
 
 const PRODUCTION = "PRODUCTION"
 const DEVELOPMENT = "DEVELOPMENT"
+const TESTING = "TESTING"
 
 func LoadEnv() ENVS {
 
