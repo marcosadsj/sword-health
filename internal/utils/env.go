@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"fmt"
 	"log"
 	"os"
 
@@ -13,17 +14,28 @@ type ENVS struct {
 	GIN_PORT       string
 }
 
+const PRODUCTION = "PRODUCTION"
+const DEVELOPMENT = "DEVELOPMENT"
+
 func LoadEnv() ENVS {
 
 	SW_ENVIRONMENT := os.Getenv("SW_ENVIRONMENT")
 
-	if SW_ENVIRONMENT != "PRODUCTION" {
+	var ENV_FILENAME string
 
-		err := godotenv.Load("../resources/.env")
+	switch SW_ENVIRONMENT {
+	case PRODUCTION:
+		ENV_FILENAME = "prod"
+	case DEVELOPMENT:
+		ENV_FILENAME = "dev"
+	default:
+		ENV_FILENAME = "local"
+	}
 
-		if err != nil {
-			log.Fatal("Error loading .env file")
-		}
+	err := godotenv.Load(fmt.Sprintf("../resources/%s.env", ENV_FILENAME))
+
+	if err != nil {
+		log.Fatal("Error loading .env file")
 	}
 
 	DATABASE_TYPE := os.Getenv("DATABASE_TYPE")
