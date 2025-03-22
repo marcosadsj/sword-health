@@ -1,4 +1,4 @@
-package database
+package logger
 
 import (
 	"log"
@@ -7,12 +7,6 @@ import (
 
 	"gorm.io/gorm/logger"
 )
-
-type IDatabase interface {
-	Connect()
-	Close()
-	Repository()
-}
 
 func GetLogger() logger.Interface {
 	return logger.New(
