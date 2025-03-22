@@ -11,7 +11,7 @@ services:
       MYSQL_PORT: 3306
       MYSQL_DATABASE: sword-health
       MYSQL_USER: root
-      MYSQL_PASSWORD: sw-mysql
+      MYSQL_PASSWORD: swh-mysql
     ports:
       - 8080:8080
   mysql:
