@@ -1,0 +1,24 @@
+services:
+  sword-health:
+    image: sword-health
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SW_ENVIRONMENT: PRODUCTION
+      GIN_PORT: 8080
+      MYSQL_HOST: mysql
+      MYSQL_POR: 3306
+      MYSQL_DATABASE: sword-health
+      MYSQL_USER: root
+      MYSQL_PASSWORD: sw-mysql
+    ports:
+      - 8080:8080
+  mysql:
+    image: mysql:8.4.4
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: swh-mysql
+      MYSQL_DATABASE: sword-health
+    ports:
+      - 3306:3306
