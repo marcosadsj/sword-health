@@ -98,7 +98,7 @@ func (mc ManagerController) listByTechnicianId(ctx *gin.Context) {
 		return
 	}
 
-	_, err := strconv.ParseInt(idString, 10, 32)
+	id, err := strconv.ParseInt(idString, 10, 32)
 
 	if err != nil {
 
@@ -112,6 +112,20 @@ func (mc ManagerController) listByTechnicianId(ctx *gin.Context) {
 	if err != nil {
 
 		ctx.String(http.StatusBadRequest, fmt.Sprintf("Wrong request param: %v", err))
+
+		return
+	}
+
+	manager, err := mc.service.Read([]int{int(id)})
+
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error to find manager %d: %v", id, err))
+
+		return
+	}
+
+	if len(manager) == 0 {
+		ctx.String(http.StatusBadRequest, fmt.Sprintf("Error to find manager: %d", id))
 
 		return
 	}
@@ -141,7 +155,7 @@ func (mc ManagerController) deleteByTaskId(ctx *gin.Context) {
 		return
 	}
 
-	_, err := strconv.ParseInt(idString, 10, 32)
+	id, err := strconv.ParseInt(idString, 10, 32)
 
 	if err != nil {
 
@@ -155,6 +169,34 @@ func (mc ManagerController) deleteByTaskId(ctx *gin.Context) {
 	if err != nil {
 
 		ctx.String(http.StatusBadRequest, fmt.Sprintf("Wrong request param: %v", err))
+
+		return
+	}
+
+	manager, err := mc.service.Read([]int{int(id)})
+
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error to find manager %d: %v", id, err))
+
+		return
+	}
+
+	if len(manager) == 0 {
+		ctx.String(http.StatusBadRequest, fmt.Sprintf("Error to find manager: %d", id))
+
+		return
+	}
+
+	tasks, err := mc.taskService.Read([]int{int(taskId)})
+
+	if err != nil {
+		ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error to find taks %d: %v", taskId, err))
+
+		return
+	}
+
+	if len(tasks) == 0 {
+		ctx.String(http.StatusNotFound, fmt.Sprintf("Task does not exists: %d", taskId))
 
 		return
 	}
@@ -199,6 +241,20 @@ func (mc ManagerController) delete(ctx *gin.Context) {
 		if err != nil {
 
 			ctx.String(http.StatusBadRequest, fmt.Sprintf("Wrong request param: %v", id))
+
+			return
+		}
+
+		managers, err := mc.service.Read([]int{int(id)})
+
+		if err != nil {
+			ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error to find manager %d: %v", id, err))
+
+			return
+		}
+
+		if len(managers) == 0 {
+			ctx.String(http.StatusNotFound, fmt.Sprintf("manager does not exists: %d", id))
 
 			return
 		}

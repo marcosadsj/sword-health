@@ -115,6 +115,20 @@ func (mc TechnicianController) delete(ctx *gin.Context) {
 			return
 		}
 
+		technicians, err := mc.service.Read([]int{int(id)})
+
+		if err != nil {
+			ctx.String(http.StatusInternalServerError, fmt.Sprintf("Error to find technician %d: %v", id, err))
+
+			return
+		}
+
+		if len(technicians) == 0 {
+			ctx.String(http.StatusNotFound, fmt.Sprintf("Technician does not exists: %d", id))
+
+			return
+		}
+
 		err = mc.service.Delete([]int{int(id)})
 
 		if err != nil {
