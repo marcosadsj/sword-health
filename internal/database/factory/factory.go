@@ -1,10 +1,10 @@
 package factory
 
 import (
-	databases "sword-health-assessment/internal/database"
+	databases "sword-health/internal/database"
 
-	"sword-health-assessment/internal/database/mysql"
-	"sword-health-assessment/internal/database/sqlite"
+	"sword-health/internal/database/mysql"
+	"sword-health/internal/database/sqlite"
 )
 
 func Create(databaseType string) databases.IDatabase {

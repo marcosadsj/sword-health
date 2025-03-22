@@ -3,9 +3,9 @@ package sqlite
 import (
 	"os"
 	"path/filepath"
-	"sword-health-assessment/internal/database/logger"
-	"sword-health-assessment/internal/entities"
-	"sword-health-assessment/internal/utils"
+	"sword-health/internal/database/logger"
+	"sword-health/internal/entities"
+	"sword-health/internal/utils"
 
 	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"

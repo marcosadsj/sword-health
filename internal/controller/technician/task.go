@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"sword-health-assessment/internal/entities"
-	"sword-health-assessment/internal/notification"
+	"sword-health/internal/entities"
+	"sword-health/internal/notification"
 
 	"github.com/gin-gonic/gin"
 )

@@ -1,8 +1,8 @@
 package technician
 
 import (
-	"sword-health-assessment/internal/entities"
-	"sword-health-assessment/internal/repository/technician"
+	"sword-health/internal/entities"
+	"sword-health/internal/repository/technician"
 )
 
 type TechnicianService struct {

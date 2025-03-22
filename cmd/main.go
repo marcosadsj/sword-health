@@ -1,11 +1,11 @@
 package main
 
 import (
-	controller "sword-health-assessment/internal/controller"
-	databaseFactory "sword-health-assessment/internal/database/factory"
-	"sword-health-assessment/internal/utils"
+	controller "sword-health/internal/controller"
+	databaseFactory "sword-health/internal/database/factory"
+	"sword-health/internal/utils"
 
-	"sword-health-assessment/internal/notification"
+	"sword-health/internal/notification"
 
 	"github.com/gin-gonic/gin"
 )

@@ -3,8 +3,8 @@ package mysql
 import (
 	"fmt"
 	"os"
-	"sword-health-assessment/internal/database/logger"
-	"sword-health-assessment/internal/entities"
+	"sword-health/internal/database/logger"
+	"sword-health/internal/entities"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

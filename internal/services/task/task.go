@@ -2,8 +2,8 @@ package task
 
 import (
 	"errors"
-	"sword-health-assessment/internal/entities"
-	"sword-health-assessment/internal/repository/task"
+	"sword-health/internal/entities"
+	"sword-health/internal/repository/task"
 )
 
 type TaskService struct {

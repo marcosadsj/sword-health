@@ -3,12 +3,12 @@ package task
 import (
 	"errors"
 	"os"
-	databases "sword-health-assessment/internal/database"
-	databaseFactory "sword-health-assessment/internal/database/factory"
-	"sword-health-assessment/internal/utils"
+	databases "sword-health/internal/database"
+	databaseFactory "sword-health/internal/database/factory"
+	"sword-health/internal/utils"
 
-	"sword-health-assessment/internal/entities"
-	taskRepository "sword-health-assessment/internal/repository/task"
+	"sword-health/internal/entities"
+	taskRepository "sword-health/internal/repository/task"
 
 	"testing"
 

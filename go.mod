@@ -1,4 +1,4 @@
-module sword-health-assessment
+module sword-health
 
 go 1.22.4
 

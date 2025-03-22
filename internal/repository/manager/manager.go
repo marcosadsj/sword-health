@@ -2,7 +2,7 @@ package manager
 
 import (
 	"errors"
-	"sword-health-assessment/internal/entities"
+	"sword-health/internal/entities"
 
 	"gorm.io/gorm"
 )
