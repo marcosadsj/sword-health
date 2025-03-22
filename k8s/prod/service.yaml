@@ -1,10 +1,10 @@
 kind apiVersion: v1
 kind: Service
 metadata:
-  name: sword-health-app-service
+  name: sword-health-app-svc-prod
 spec:
   selector:
-    app: sword-health-app-service
+    app: sword-health-app-svc-prod
   ports:
   - port: 8080
     targetPort: 8080

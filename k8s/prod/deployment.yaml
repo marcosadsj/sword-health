@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sword-health-app
+  name: sword-health-app-prod
 spec:
   selector:
     matchLabels:
-      app: sword-health-app
+      app: sword-health-app-prod
   template:
     metadata:
       labels:
-        app: sword-health-app
+        app: sword-health-app-prod
     spec:
       containers:
-        - name: sword-health-app
+        - name: sword-health-app-prod
           image: sword-health:latest
           imagePullPolicy: Always
           resources:
@@ -22,10 +22,12 @@ spec:
           ports:
             - containerPort: 8080
       volumeMounts:
-        - name: sword-health-app-env-dev-vol
-          mountPath: /app/resources/.env.dev 
-          subPath: .env.dev
+        - name: sword-health-app-env-prod-vol
+          mountPath: /app/resources/.env.prod 
+          subPath: .env.prod
       volumes:
-        - name: sword-health-app-env-dev-vol
+        - name: sword-health-app-env-prod-vol
           configMap:
-            name: sword-health-app-env-dev
+            name: sword-health-app-env-prod
+    
+      

@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sword-health-app
+  name: sword-health-app-dev
 spec:
   selector:
     matchLabels:
-      app: sword-health-app
+      app: sword-health-app-dev
   template:
     metadata:
       labels:
-        app: sword-health-app
+        app: sword-health-app-dev
     spec:
       containers:
-        - name: sword-health-app
+        - name: sword-health-app-dev
           image: sword-health:latest
           imagePullPolicy: Always
           resources:
