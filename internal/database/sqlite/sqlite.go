@@ -1,6 +1,7 @@
 package sqlite
 
 import (
+	"os"
 	"path/filepath"
 	"sword-health-assessment/internal/database/logger"
 	"sword-health-assessment/internal/entities"
@@ -56,11 +57,7 @@ func (d *SQLite) Connect() {
 }
 
 func (d SQLite) Close() {
-
-}
-
-func (d SQLite) Repository() {
-
+	os.Remove(d.filepath)
 }
 
 func (d *SQLite) GetDB() *gorm.DB {
