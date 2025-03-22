@@ -1,6 +1,7 @@
 package task
 
 import (
+	"errors"
 	"sword-health-assessment/entities"
 
 	"gorm.io/gorm"
@@ -20,6 +21,9 @@ type TaskRepository struct {
 
 func (mr TaskRepository) Create(task *entities.Task) error {
 
+	if task.Name == "" {
+		return errors.New("name cannot be empty")
+	}
 	tx := mr.DB.Create(&task)
 
 	return tx.Error
