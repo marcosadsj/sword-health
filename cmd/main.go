@@ -16,6 +16,10 @@ func main() {
 	DATABASE_TYPE := os.Getenv("DATABASE_TYPE")
 	GIN_PORT := os.Getenv("GIN_PORT")
 
+	if GIN_PORT == "" {
+		GIN_PORT = "8080"
+	}
+
 	httpServer := gin.Default()
 
 	database := databases.Create(DATABASE_TYPE)
