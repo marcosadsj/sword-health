@@ -19,7 +19,7 @@ func GetMYSQLDatabaseType() string {
 }
 
 func GetSQLITEDatabaseType() string {
-	return "MYSQL"
+	return "SQLITE"
 }
 
 const PRODUCTION = "PRODUCTION"
