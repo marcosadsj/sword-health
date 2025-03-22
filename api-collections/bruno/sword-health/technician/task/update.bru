@@ -1,0 +1,19 @@
+meta {
+  name: update
+  type: http
+  seq: 3
+}
+
+patch {
+  url: http://localhost:8080/technician/1/task/update
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id": 4,
+    "name": "Marcos Adriano",
+    "description": "Description Task 4444"
+  }
+}
