@@ -40,7 +40,7 @@ func (mr TaskRepository) Read(ids []int) (tasks []*entities.Task, err error) {
 
 func (mr TaskRepository) FindByTechnicianId(id int) (tasks []*entities.Task, err error) {
 
-	tx := mr.DB.Find(&tasks, id)
+	tx := mr.DB.Where("technician_id = ?", id).Find(&tasks)
 
 	return tasks, tx.Error
 
