@@ -63,9 +63,18 @@ func (mc TechnicianController) createTask(ctx *gin.Context) {
 
 	task := entities.Task{}
 
+	task.TechnicianID = uint(id)
+
 	if err := ctx.ShouldBindBodyWithJSON(&task); err == nil {
 
-		mc.taskService.Create(&task)
+		err = mc.taskService.Create(&task)
+
+		if err != nil {
+
+			ctx.String(http.StatusInternalServerError, fmt.Sprintf("Task not created: %v", err))
+
+			return
+		}
 
 		mc.notificationChan <- notification.Notification{TechnicianID: int(id), TaskID: int(task.ID), Date: task.CreatedAt}
 
