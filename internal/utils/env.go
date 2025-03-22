@@ -14,9 +14,8 @@ type ENVS struct {
 }
 
 func LoadEnv() ENVS {
+
 	SW_ENVIRONMENT := os.Getenv("SW_ENVIRONMENT")
-	DATABASE_TYPE := os.Getenv("DATABASE_TYPE")
-	GIN_PORT := os.Getenv("GIN_PORT")
 
 	if SW_ENVIRONMENT != "PRODUCTION" {
 
@@ -26,6 +25,9 @@ func LoadEnv() ENVS {
 			log.Fatal("Error loading .env file")
 		}
 	}
+
+	DATABASE_TYPE := os.Getenv("DATABASE_TYPE")
+	GIN_PORT := os.Getenv("GIN_PORT")
 
 	if GIN_PORT == "" {
 		GIN_PORT = "8080"
