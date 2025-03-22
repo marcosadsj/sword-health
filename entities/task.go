@@ -4,9 +4,10 @@ import "gorm.io/gorm"
 
 type Task struct {
 	gorm.Model
-	Name         string `goorm:"column:name"`
-	Description  string `goorm:"column:description;size:2500"`
-	TechnicianID uint   `gorm:"<-:create"`
+	Name         string     `goorm:"column:name"`
+	Description  string     `goorm:"column:description;size:2500"`
+	TechnicianID uint       `gorm:"<-:create"`
+	Technician   Technician `gorm:"foreignKey:TechnicianID;references:ID;constraint:OnUpdate:CASCADE,OnDelete:CASCADE;"`
 }
 
 func (Task) TableName() string {
