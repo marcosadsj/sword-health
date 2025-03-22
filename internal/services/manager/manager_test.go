@@ -3,7 +3,8 @@ package manager
 import (
 	"errors"
 	"os"
-	"sword-health-assessment/internal/database/sqlite"
+	databases "sword-health-assessment/internal/database"
+
 	"sword-health-assessment/internal/entities"
 	managerRepository "sword-health-assessment/internal/repository/manager"
 
@@ -12,10 +13,9 @@ import (
 	"gorm.io/gorm"
 )
 
-func BeforeEach() *sqlite.SQLite {
-	database := &sqlite.SQLite{
-		Pathname: "test_manager.db",
-	}
+func BeforeEach() databases.IDatabase {
+
+	database := databases.Create("SQLITE")
 
 	database.Connect()
 

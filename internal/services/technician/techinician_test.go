@@ -3,8 +3,9 @@ package technician
 import (
 	"errors"
 	"os"
-	"sword-health-assessment/internal/database/sqlite"
+	databases "sword-health-assessment/internal/database"
 	"sword-health-assessment/internal/entities"
+
 	technicianRepository "sword-health-assessment/internal/repository/technician"
 
 	"testing"
@@ -12,10 +13,9 @@ import (
 	"gorm.io/gorm"
 )
 
-func BeforeEach() *sqlite.SQLite {
-	database := &sqlite.SQLite{
-		Pathname: "test_technician.db",
-	}
+func BeforeEach() databases.IDatabase {
+
+	database := databases.Create("SQLITE")
 
 	database.Connect()
 
