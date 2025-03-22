@@ -69,7 +69,7 @@ func TestCreate(t *testing.T) {
 
 	}
 
-	// AfterEach()
+	AfterEach()
 }
 
 func TestRead(t *testing.T) {
