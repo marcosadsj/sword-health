@@ -18,33 +18,24 @@ type MySQL struct {
 func (d *MySQL) New(enviroment string) {
 
 	d.SetEnviroment(enviroment)
-
-	d.Migrate()
 }
 
 func (d *MySQL) SetEnviroment(enviroment string) {
 
-	if enviroment == "PRODUCTION" {
+	MYSQL_HOST := os.Getenv("MYSQL_HOST")
+	MYSQL_PORT := os.Getenv("MYSQL_PORT")
+	MYSQL_DATABASE := os.Getenv("MYSQL_DATABASE")
+	MYSQL_USER := os.Getenv("MYSQL_USER")
+	MYSQL_PASSWORD := os.Getenv("MYSQL_PASSWORD")
 
-		MYSQL_HOST := os.Getenv("MYSQL_HOST")
-		MYSQL_PORT := os.Getenv("MYSQL_PORT")
-		MYSQL_DATABASE := os.Getenv("MYSQL_DATABASE")
-		MYSQL_USER := os.Getenv("MYSQL_USER")
-		MYSQL_PASSWORD := os.Getenv("MYSQL_PASSWORD")
-
-		d.SetDSN(MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD)
-
-		return
-	}
-
-	panic("only production enviroment was created")
+	d.SetDSN(MYSQL_HOST, MYSQL_PORT, MYSQL_DATABASE, MYSQL_USER, MYSQL_PASSWORD)
 
 }
 
 func (d *MySQL) SetDSN(host, port, databasename, user, password string) {
 
 	d.dsn = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?harset=utf8mb4&parseTime=True&loc=Local",
-		host, port, databasename, user, password)
+		user, password, host, port, databasename)
 }
 
 func (d *MySQL) Connect() {
@@ -56,6 +47,9 @@ func (d *MySQL) Connect() {
 	}
 
 	d.db = db
+
+	d.Migrate()
+
 }
 
 func (d MySQL) Close() {
