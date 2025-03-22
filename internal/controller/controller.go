@@ -1,18 +1,18 @@
 package api
 
 import (
-	managerController "sword-health-assessment/controller/manager"
-	techController "sword-health-assessment/controller/technician"
-	"sword-health-assessment/notification"
+	managerController "sword-health-assessment/internal/controller/manager"
+	techController "sword-health-assessment/internal/controller/technician"
+	"sword-health-assessment/internal/notification"
 
-	managerRepository "sword-health-assessment/repository/manager"
-	managerService "sword-health-assessment/services/manager"
+	managerRepository "sword-health-assessment/internal/repository/manager"
+	managerService "sword-health-assessment/internal/services/manager"
 
-	technicianRepository "sword-health-assessment/repository/technician"
-	technicianService "sword-health-assessment/services/technician"
+	technicianRepository "sword-health-assessment/internal/repository/technician"
+	technicianService "sword-health-assessment/internal/services/technician"
 
-	taskRepository "sword-health-assessment/repository/task"
-	taskService "sword-health-assessment/services/task"
+	taskRepository "sword-health-assessment/internal/repository/task"
+	taskService "sword-health-assessment/internal/services/task"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"

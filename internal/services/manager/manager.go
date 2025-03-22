@@ -1,8 +1,8 @@
 package manager
 
 import (
-	"sword-health-assessment/entities"
-	"sword-health-assessment/repository/manager"
+	"sword-health-assessment/internal/entities"
+	"sword-health-assessment/internal/repository/manager"
 )
 
 type ManagerService struct {

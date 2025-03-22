@@ -1,9 +1,9 @@
 package main
 
 import (
-	controller "sword-health-assessment/controller"
-	sqlite "sword-health-assessment/database/sqlite"
-	"sword-health-assessment/notification"
+	controller "sword-health-assessment/internal/controller"
+	sqlite "sword-health-assessment/internal/database/sqlite"
+	"sword-health-assessment/internal/notification"
 
 	"github.com/gin-gonic/gin"
 )

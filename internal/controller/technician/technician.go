@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
-	"sword-health-assessment/entities"
-	"sword-health-assessment/notification"
-	taskService "sword-health-assessment/services/task"
-	technicianService "sword-health-assessment/services/technician"
+	"sword-health-assessment/internal/entities"
+	"sword-health-assessment/internal/notification"
+	taskService "sword-health-assessment/internal/services/task"
+	technicianService "sword-health-assessment/internal/services/technician"
 
 	"github.com/gin-gonic/gin"
 )

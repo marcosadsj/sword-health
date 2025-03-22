@@ -3,9 +3,9 @@ package technician
 import (
 	"errors"
 	"os"
-	"sword-health-assessment/database/sqlite"
-	"sword-health-assessment/entities"
-	technicianRepository "sword-health-assessment/repository/technician"
+	"sword-health-assessment/internal/database/sqlite"
+	"sword-health-assessment/internal/entities"
+	technicianRepository "sword-health-assessment/internal/repository/technician"
 
 	"testing"
 

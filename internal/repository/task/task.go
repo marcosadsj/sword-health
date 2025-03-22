@@ -2,7 +2,7 @@ package task
 
 import (
 	"errors"
-	"sword-health-assessment/entities"
+	"sword-health-assessment/internal/entities"
 
 	"gorm.io/gorm"
 )

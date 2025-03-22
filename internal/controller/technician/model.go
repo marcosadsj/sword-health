@@ -1,9 +1,9 @@
 package technician
 
 import (
-	"sword-health-assessment/notification"
-	taskService "sword-health-assessment/services/task"
-	technicianService "sword-health-assessment/services/technician"
+	"sword-health-assessment/internal/notification"
+	taskService "sword-health-assessment/internal/services/task"
+	technicianService "sword-health-assessment/internal/services/technician"
 )
 
 type TechnicianController struct {

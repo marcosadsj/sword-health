@@ -3,9 +3,9 @@ package task
 import (
 	"errors"
 	"os"
-	"sword-health-assessment/database/sqlite"
-	"sword-health-assessment/entities"
-	taskRepository "sword-health-assessment/repository/task"
+	"sword-health-assessment/internal/database/sqlite"
+	"sword-health-assessment/internal/entities"
+	taskRepository "sword-health-assessment/internal/repository/task"
 
 	"testing"
 

@@ -1,8 +1,8 @@
 package sqlite
 
 import (
-	"sword-health-assessment/database"
-	"sword-health-assessment/entities"
+	"sword-health-assessment/internal/database"
+	"sword-health-assessment/internal/entities"
 
 	"github.com/glebarez/sqlite"
 	"gorm.io/gorm"

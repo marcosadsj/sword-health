@@ -3,9 +3,9 @@ package manager
 import (
 	"errors"
 	"os"
-	"sword-health-assessment/database/sqlite"
-	"sword-health-assessment/entities"
-	managerRepository "sword-health-assessment/repository/manager"
+	"sword-health-assessment/internal/database/sqlite"
+	"sword-health-assessment/internal/entities"
+	managerRepository "sword-health-assessment/internal/repository/manager"
 
 	"testing"
 
