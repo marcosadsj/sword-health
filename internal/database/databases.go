@@ -11,7 +11,6 @@ type IDatabase interface {
 	New(enviroment string)
 	Connect()
 	Close()
-	Repository()
 	Migrate()
 	GetDB() *gorm.DB
 	SetEnviroment(string)

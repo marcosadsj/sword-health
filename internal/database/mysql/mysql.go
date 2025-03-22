@@ -62,10 +62,6 @@ func (d MySQL) Close() {
 
 }
 
-func (d MySQL) Repository() {
-
-}
-
 func (d *MySQL) GetDB() *gorm.DB {
 	return d.db
 }
