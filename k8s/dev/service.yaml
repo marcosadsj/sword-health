@@ -1,0 +1,11 @@
+kind apiVersion: v1
+kind: Service
+metadata:
+  name: sword-health-app-service
+spec:
+  selector:
+    app: sword-health-app-service
+  ports:
+  - port: 8080
+    targetPort: 8080
+  type: ClusterIP

@@ -1,0 +1,18 @@
+apiVersion: kustomiza.config.k8s.io/v1beta1
+kind: kustomization
+configMapGenerator:
+  - name: sword-health-app-env-prod
+    files:
+      - ./resources/.env.prod
+  - name: sword-health-app-env-dev
+    files:
+      - ./resources/.env.dev
+  - name: sword-health-app-env-local
+    files:
+      - ./resources/.env.local
+generatorOptions:
+  disableNameSuffixHash: true
+  labels:
+    type: generated
+  annotations:
+    note: generated

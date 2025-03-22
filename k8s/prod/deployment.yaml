@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sword-health-app
+spec:
+  selector:
+    matchLabels:
+      app: sword-health-app
+  template:
+    metadata:
+      labels:
+        app: sword-health-app
+    spec:
+      containers:
+        - name: sword-health-app
+          image: sword-health:latest
+          imagePullPolicy: Always
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8080
+      volumeMounts:
+        - name: sword-health-app-env-dev-vol
+          mountPath: /app/resources/.env.dev 
+          subPath: .env.dev
+      volumes:
+        - name: sword-health-app-env-dev-vol
+          configMap:
+            name: sword-health-app-env-dev
