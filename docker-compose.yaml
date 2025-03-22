@@ -22,3 +22,5 @@ services:
       MYSQL_DATABASE: sword-health
     ports:
       - 3306:3306
+    volumes:
+      - ./resources/mysql:/var/lib/mysql
