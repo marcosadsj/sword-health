@@ -17,7 +17,7 @@ import (
 
 func BeforeEach() databases.IDatabase {
 
-	database := databaseFactory.Create("SQLITE")
+	database := databaseFactory.Create(utils.GetSQLITEDatabaseType())
 
 	database.New(utils.TESTING)
 
@@ -90,11 +90,11 @@ func TestRead(t *testing.T) {
 	}{
 		{
 			in:   &entities.Task{Model: gorm.Model{ID: 1}, Name: "Marcos 1", TechnicianID: 1},
-			want: &entities.Task{Model: gorm.Model{ID: 1}, Name: "Marcos 1"},
+			want: &entities.Task{Model: gorm.Model{ID: 1}, Name: "Marcos 1", TechnicianID: 1},
 		},
 		{
 			in:   &entities.Task{Model: gorm.Model{ID: 2}, Name: "Marcos 2", TechnicianID: 2},
-			want: &entities.Task{Model: gorm.Model{ID: 2}, Name: "Marcos 2"},
+			want: &entities.Task{Model: gorm.Model{ID: 2}, Name: "Marcos 2", TechnicianID: 2},
 		},
 	}
 
@@ -134,11 +134,11 @@ func TestUpdate(t *testing.T) {
 	}{
 		{
 			in:   &entities.Task{Model: gorm.Model{ID: 1}, Name: "Marcos 1", TechnicianID: 1},
-			want: &entities.Task{Model: gorm.Model{ID: 1}, Name: "Marcos 11"},
+			want: &entities.Task{Model: gorm.Model{ID: 1}, Name: "Marcos 11", TechnicianID: 1},
 		},
 		{
 			in:   &entities.Task{Model: gorm.Model{ID: 2}, Name: "Marcos 2", TechnicianID: 2},
-			want: &entities.Task{Model: gorm.Model{ID: 2}, Name: "Marcos 22"},
+			want: &entities.Task{Model: gorm.Model{ID: 2}, Name: "Marcos 22", TechnicianID: 2},
 		},
 	}
 

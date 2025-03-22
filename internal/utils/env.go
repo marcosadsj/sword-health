@@ -14,6 +14,14 @@ type ENVS struct {
 	GIN_PORT       string
 }
 
+func GetMYSQLDatabaseType() string {
+	return "MYSQL"
+}
+
+func GetSQLITEDatabaseType() string {
+	return "MYSQL"
+}
+
 const PRODUCTION = "PRODUCTION"
 const DEVELOPMENT = "DEVELOPMENT"
 const TESTING = "TESTING"
