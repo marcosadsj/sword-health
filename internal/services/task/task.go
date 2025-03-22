@@ -1,6 +1,7 @@
 package task
 
 import (
+	"errors"
 	"sword-health-assessment/internal/entities"
 	"sword-health-assessment/internal/repository/task"
 )
@@ -14,6 +15,10 @@ func (s *TaskService) New(repository task.ITaskRepository) {
 }
 
 func (s TaskService) Create(task *entities.Task) error {
+
+	if task.TechnicianID == 0 {
+		return errors.New("TechnicianID cannot be zero")
+	}
 
 	return s.repository.Create(task)
 
