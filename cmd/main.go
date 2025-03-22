@@ -2,7 +2,7 @@ package main
 
 import (
 	controller "sword-health-assessment/internal/controller"
-	databases "sword-health-assessment/internal/database"
+	databaseFactory "sword-health-assessment/internal/database/factory"
 	"sword-health-assessment/internal/utils"
 
 	"sword-health-assessment/internal/notification"
@@ -16,7 +16,7 @@ func main() {
 
 	envs := utils.LoadEnv()
 
-	database := databases.Create(envs.DATABASE_TYPE)
+	database := databaseFactory.Create(envs.DATABASE_TYPE)
 
 	database.New(envs.SW_ENVIRONMENT)
 	database.Connect()

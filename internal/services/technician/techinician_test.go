@@ -4,6 +4,8 @@ import (
 	"errors"
 	"os"
 	databases "sword-health-assessment/internal/database"
+	databaseFactory "sword-health-assessment/internal/database/factory"
+
 	"sword-health-assessment/internal/entities"
 
 	technicianRepository "sword-health-assessment/internal/repository/technician"
@@ -15,7 +17,7 @@ import (
 
 func BeforeEach() databases.IDatabase {
 
-	database := databases.Create("SQLITE")
+	database := databaseFactory.Create("SQLITE")
 
 	database.Connect()
 
